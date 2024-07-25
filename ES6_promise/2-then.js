@@ -7,4 +7,4 @@ function handleResponseFromAPI(promise) {
     .catch(() => new Error());
 }
 
-  export default handleResponseFromAPI;
+export default handleResponseFromAPI;
