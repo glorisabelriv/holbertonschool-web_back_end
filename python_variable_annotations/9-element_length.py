@@ -1,22 +1,20 @@
 #!/usr/bin/env python3
 """
-Este módulo proporciona una función que crea un multiplicador.
+Este módulo proporciona una función que devuelve una lista
+de tuplas con elementos y su longitud.
 """
 
-from typing import Callable
+from typing import List, Tuple, Sequence
 
 
-def make_multiplier(multiplier: float) -> Callable[[float], float]:
+def element_length(lst: List[Sequence]) -> List[Tuple[Sequence, int]]:
     """
-    Toma un número flotante `multiplier` y retorna una función que
-    multiplica cualquier número flotante por ese `multiplier`.
+    Toma una lista de secuencias y retorna una lista de tuplas.
+    Cada tupla contiene un elemento de la lista original y
+    la longitud de ese elemento.
 
-    :param multiplier: El número flotante por el cual se
-    multiplicará otro número flotante
-    :return: Una función que toma un flotante y
-    retorna el producto del flotante y `multiplier`
+    :param lst: Lista de secuencias (como cadenas, listas, etc.)
+    :return: Lista de tuplas donde cada tupla contiene
+    una secuencia y su longitud
     """
-    def multiplier_function(x: float) -> float:
-        return x * multiplier
-
-    return multiplier_function
+    return [(i, len(i)) for i in lst]
