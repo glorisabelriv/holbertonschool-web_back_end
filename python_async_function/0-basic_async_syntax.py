@@ -2,13 +2,13 @@
 import asyncio
 import random
 
-async def esperar_aleatorio(max_delay: int = 10) -> float:
+async def wait_random(max_delay: int = 10) -> float:
     """
-    Corrutina asincrónica que espera un tiempo aleatorio entre 0 y max_delay segundos
-    y devuelve ese tiempo.
+    Asynchronous coroutine that waits for a random time between 0 and max_delay seconds
+    and returns that time.
 
-    :param max_delay: Tiempo máximo de espera (en segundos)
-    :return: El tiempo que se esperó, como un número flotante
+    :param max_delay: Maximum wait time (in seconds)
+    :return: The time waited, as a float
     """
     delay = random.uniform(0, max_delay)
     await asyncio.sleep(delay)
