@@ -6,7 +6,7 @@ function countStudents(path) {
     const data = fs.readFileSync(path, 'utf8');
 
     // Separar las líneas del archivo
-    const lines = data.split('\n').filter(line => line.trim() !== ''); // Eliminar líneas vacías
+    const lines = data.split('\n').filter((line) => line.trim() !== ''); // Eliminar líneas vacías
 
     if (lines.length <= 1) {
       console.log('Number of students: 0');
@@ -24,7 +24,7 @@ function countStudents(path) {
 
     // Iterar sobre cada estudiante
     students.forEach((line) => {
-      const [firstname, lastname, age, field] = line.split(',');
+      const [firstname, , , field] = line.split(',');
 
       if (!fields[field]) {
         fields[field] = [];
@@ -34,7 +34,7 @@ function countStudents(path) {
 
     // Mostrar la cantidad de estudiantes por campo y la lista de nombres
     for (const field in fields) {
-      if (fields.hasOwnProperty(field)) {
+      if (Object.prototype.hasOwnProperty.call(fields, field)) {
         console.log(`Number of students in ${field}: ${fields[field].length}. List: ${fields[field].join(', ')}`);
       }
     }
