@@ -5,7 +5,6 @@ const app = http.createServer((req, res) => {
   // Establecer el código de estado HTTP y el tipo de contenido
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
-  
   // Enviar la respuesta con el mensaje
   res.end('Hello Holberton School!');
 });
