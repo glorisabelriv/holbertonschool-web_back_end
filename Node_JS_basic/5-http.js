@@ -1,47 +1,36 @@
 const http = require('http');
+
+const args = process.argv.slice(2);
 const countStudents = require('./3-read_file_async');
 
-// Recuperar el argumento de la línea de comandos (nombre del archivo CSV)
-const databaseFile = process.argv[2];
+const DATABASE = args[0];
 
-// Crear el servidor HTTP
-const app = http.createServer((req, res) => {
-  // Configurar la cabecera de respuesta para texto plano
+const hostname = '127.0.0.1';
+const port = 1245;
+
+const app = http.createServer(async (req, res) => {
+  res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
 
-  // Ruta raíz '/'
-  if (req.url === '/') {
-    res.statusCode = 200;
-    res.end('Hello Holberton School!');
-  }
+  const { url } = req;
 
-  // Ruta '/students'
-  else if (req.url === '/students') {
-    res.statusCode = 200;
+  if (url === '/') {
+    res.write('Hello Holberton School!');
+  } else if (url === '/students') {
     res.write('This is the list of our students\n');
-
-    // Llamar a countStudents para obtener la lista de estudiantes
-    countStudents(databaseFile)
-      .then(() => {
-        res.end(); // Finalizar la respuesta una vez que se hayan mostrado los estudiantes
-      })
-      .catch((error) => {
-        res.statusCode = 500;
-        res.end(error.message); // Mostrar el mensaje de error en caso de fallo
-      });
+    try {
+      const students = await countStudents(DATABASE);
+      res.end(`${students.join('\n')}`);
+    } catch (error) {
+      res.end(error.message);
+    }
   }
-
-  // Cualquier otra ruta
-  else {
-    res.statusCode = 404;
-    res.end('Not Found');
-  }
+  res.statusCode = 404;
+  res.end();
 });
 
-// Hacer que el servidor escuche en el puerto 1245
-app.listen(1245, () => {
-  console.log('Server is listening on port 1245');
+app.listen(port, hostname, () => {
+  //   console.log(`Server running at http://${hostname}:${port}/`);
 });
 
-// Exportar el servidor
 module.exports = app;
