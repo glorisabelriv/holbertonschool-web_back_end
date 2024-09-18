@@ -1,14 +1,14 @@
-// 1-stdin.js
+process.stdout.write('Welcome to Holberton School, what is your name?\n');
 
-// Mostrar el mensaje inicial
-console.log("Welcome to Holberton School, what is your name?");
+process.stdin.setEncoding('utf8');
 
-// Leer la entrada estándar (stdin)
-process.stdin.on('data', (input) => {
-    const name = input.toString().trim(); // Convertir la entrada a string y eliminar espacios adicionales
-    console.log(`Your name is: ${name}`); // Mostrar el nombre ingresado
+process.stdin.on('readable', () => {
+  const chunk = process.stdin.read();
+  if (chunk !== null) {
+    process.stdout.write(`Your name is: ${chunk}`);
+  }
+});
 
-    // Cerrar el programa y mostrar el mensaje final
-    console.log("This important software is now closing");
-    process.exit(); // Salir del programa
+process.stdin.on('end', () => {
+  process.stdout.write('This important software is now closing\n');
 });
